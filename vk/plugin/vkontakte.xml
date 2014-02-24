@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<install version="2.5" type="plugin" group="content">
+    <name>plg_content_vkontakte</name>
+    <author>DXLAB</author>
+    <creationDate>01.01.2014</creationDate>
+    <authorEmail>support@dxlab.ru</authorEmail>
+    <authorUrl>www.dxlab.ru</authorUrl>
+    <version>0.1</version>
+    <description>vk plugin</description>
+    <files>
+        <filename plugin="vkontakte">vkontakte.php</filename>
+        <filename>index.html</filename>
+    </files>
+</install>

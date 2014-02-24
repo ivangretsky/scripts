@@ -1,0 +1,11 @@
+// Получаем юзеров из группы
+var ids = API.groups.getMembers({ group_id : 34792066 })
+
+
+// Инфа о пользователях
+return [
+API.users.get({"user_ids":1, fields:"photo_200"}),
+API.users.get({"user_ids":5, fields:"photo_200"}),
+API.users.get({"user_ids":6, fields:"photo_200"})];
+
+

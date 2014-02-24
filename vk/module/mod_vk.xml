@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="module" version="2.5.0" method="upgrade">
+        <!-- Названия модуля -->
+        <name>mod_vk</name>
+        <!-- Следующие элементы являются не обязательными,
+            информация об авторе, копирайте и т.п. -->
+        <creationDate>13.01.2014</creationDate>
+        <author>DXLAB</author>
+        <authorEmail>support@dxlab.ru</authorEmail>
+        <authorUrl>http://www.dxlab.ru</authorUrl>
+        <copyright>Copyright Info</copyright>
+        <license>License Info</license>
+        <!--  Версия модуля запишется в БД таблица extension -->
+        <version>0.0.1</version>
+        <!-- Описание, не обязательно, по умолчанию использеуется имя модуля -->
+        <description>vk</description>
+  
+        <!-- Обратите внимание на атрибут folder, он указывает из
+                 какой директории будут копироваться файлы  -->
+        <files>
+                <filename module="mod_vk">mod_vk.php</filename>
+                <filename>mod_vk.xml</filename>
+                <filename>index.html</filename>
+                <filename>vk.install.sql</filename>
+                <filename>vk.unistall.sql</filename>
+        </files>
+        
+        <install>
+            <sql>
+                <file driver="mysql" charset="utf8">vk.install.sql</file>
+            </sql>
+        </install>
+        
+        <uninstall>
+		<sql>
+			<file driver="mysql" charset="utf8">vk.unistall.sql</file>
+		</sql>
+	</uninstall>
+        
+        
+        
+        <config>
+		<fields name="params">
+			<fieldset name="basic">
+                            <field name="count_render_users" type="text" default="0" label="Количество пользователей для вывода" />
+                            <field name="group_vk_link" type="text" default="" label="Ссылка группы" />
+                            <field name="group_link" type="text" default="" label="Ссылка на внутреннюю страницу группы" />
+                            <field name="html_code" label ="Произвольный код" type="editor" width="300" filter="safehtml" />
+			</fieldset>
+
+		</fields>
+	</config>
+        
+</extension>

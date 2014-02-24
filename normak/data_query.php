@@ -1,0 +1,1 @@
+INSERT INTO  `siteinfo` (`url`, `title`, `price`, `img`, `param`, `desc`, `status`) VALUES ('http://shimano.ru/models/details/triggerx-munmun-shad-50-uvks.html', ' Мягкая приманка  TriggerX MunMun Shad 50 UVKS', '  200&nbsp;руб.', '', 'Код товара: 32277 &Артикул:  TXMS50-UVKS &Длина:  13см. &Кол-во в упаковке:  4шт. ', '&nbsp;', '0')
