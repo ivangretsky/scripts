@@ -14,7 +14,7 @@
 // Подключаем класс
 include_once '../class/dxlab.rozetka.class.php';
 // Создаем класс
-$rozetka = new rozetka(array("db"=>"rozetka69", "host"=>"127.0.0.1", "user"=>"root", "pass"=>"", "jprefix"=>"fgphv", "folder_images"=>"./data/img/"));
+$rozetka = new rozetka(array("db"=>"db_rozetka69", "host"=>"127.0.0.1", "user"=>"root", "pass"=>"", "jprefix"=>"fgphv", "folder_images"=>"./data/img/"));
 // Проверяем поля
 $rozetka->check_db();
 // Парсим группы
