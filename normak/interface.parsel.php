@@ -64,7 +64,7 @@ $(".start").on( "click", function() {
       var val = progressbar.progressbar( "value" ) || 0;
  
       // Выполняем обновление
-      if ( val < 99 ) {
+      if ( val <= 99 ) {
         $.ajax({
            type: "POST",
            url: "http://127.0.0.1/scripts.ru/normak/json.php",

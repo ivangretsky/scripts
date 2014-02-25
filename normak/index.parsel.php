@@ -47,11 +47,13 @@ if($_GET["q"]=="p_url_site"){
     $shimano->parselUrlToDB("siteinfo");
 }
 
+// Добавляем найденые товары в таблицы
 if($_GET["q"]=="update_csv_db") {
     $updateDB = new updateDB(array("db"=>"parsel", "host"=>"127.0.0.1", "user"=>"root", "pass"=>"", "table"=>"siteinfo"));
     $updateDB->updateCsvToTable("data/nado.csv", "siteinfo");
 }
 
+// Добавляем товары на сайт
 if($_GET["q"]=="update_tversport") {
     $updateDB = new updateDB(array("db"=>"parsel", "host"=>"127.0.0.1", "user"=>"root", "pass"=>"", "table"=>"siteinfo"));
     $updateDB->updateDBTverSport();

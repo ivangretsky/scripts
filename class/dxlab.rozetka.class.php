@@ -571,10 +571,18 @@ class rozetka {
              $percent = $size; // Ширина изображения миниатюры
         
              list($width, $height) = getimagesize($filename); // Возвращает ширину и высоту
+             
+             
+             $newwidth = $height;
              $newheight    = $height * $percent;
-             $newwidth     = $newheight / $width;
-        
-             $thumb = imagecreatetruecolor($percent, $newwidth);
+             if($percent<$width) $newwidth     = $newheight / $width;
+             
+             if($percent<$width)
+                 $thumb = imagecreatetruecolor($percent, $newwidth);
+             else
+                 $thumb = imagecreatetruecolor($percent, $height);
+             
+             imagefill($thumb, 0, 0, 0xFFFFFF);
         
              switch ($ext) {
                  case '.jpg':
@@ -596,7 +604,10 @@ class rozetka {
             /*
             * Функция наложения, копирования изображения
             */
-            imagecopyresized($thumb, $source, 0, 0, 0, 0, $percent, $newwidth, $width, $height);
+            if($percent<$width)
+                imagecopyresized($thumb, $source, 0, 0, 0, 0, $percent, $newwidth, $width, $height);
+            else
+                imagecopyresized($thumb, $source, round(($percent-$width)/2), 0, 0, 0, $width, $height, $width, $height);
         
             /*
             * Создаем изображение

@@ -162,7 +162,8 @@ class updateDB {
 	    while($row =  mysql_fetch_object($result)) {
                 if($row->{"cat"}!="0"){
                     if(!empty($array_cat[$row->{"cat"}])){
-                        // Тут добавляем товар в базу
+                        
+                        // Тут добавляем товары в базу
                         
                         
                         // Переменные для сверки
