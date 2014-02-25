@@ -59,4 +59,11 @@ if($_GET["q"]=="update_tversport") {
     $updateDB->updateDBTverSport();
 }
 
+// Добавляем товары на сайт
+if($_GET["q"]=="update_tversport_param") {
+    $updateDB = new updateDB(array("db"=>"parsel", "host"=>"127.0.0.1", "user"=>"root", "pass"=>"", "table"=>"siteinfo"));
+    $updateDB->updateDbTverSportParam("tversportru2");
+}
+
+
 ?>

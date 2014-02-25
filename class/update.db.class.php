@@ -299,4 +299,52 @@ class updateDB {
     }
     
     
+    // Добавляем товары в пустые характеристики
+    public function updateDbTverSportParam($table){
+        // Вытаскиваем все товары из базы данных
+        $q = mysql_query("SELECT * FROM `".$table."`.`vlif9_jshopping_products`");
+        if (!q) {die (mysql_errno($this->db_link) . ": " . mysql_error($this->db_link));}
+        
+         // Заполняем массив товарами
+         $array_db_info = array();
+         while($row =  mysql_fetch_object($q)) {
+            $array_db_info = array("id"=>$row->{"product_id"}, "name"=>$row->{"name_ru-RU"}, "param"=>$row->{"description_ru-RU"});
+            if($row->{"description_ru-RU"}=="")
+            {
+                // Ищем товар без параметров
+                $result = mysql_query("SELECT `param`, `desc` FROM `parsel`.`siteinfo` WHERE `title`='".$row->{"name_ru-RU"}."'");
+                if ($result){
+                    print $row->{"name_ru-RU"}."<br/>";
+                                $array_db = mysql_fetch_array($result);
+                                $array = explode("&", $array_db["param"]);
+                                // Атрибуты
+                                $attrtable = '';
+				foreach ($array as $p){
+                                $line_param = explode(":", $p);
+				$attrtable .= '<tr><td>'.$line_param[0].'</td><td>'.$line_param[1].'</td></tr>';					
+				}
+				if($attrtable!='') {
+				  $attrtable = '<p style="font-weight:bold;">Характеристики:</p><table class="prodattrs">'.$attrtable.'</table>';		
+				}
+                                $prod_descr = html_entity_decode($array_db["desc"]);
+                                $qUpdate = mysql_query("UPDATE  `".$table."`.`vlif9_jshopping_products` SET  `description_ru-RU` = '".mysql_real_escape_string($prod_descr.$attrtable)."' WHERE  `vlif9_jshopping_products`.`product_id` = ".$row->{"product_id"}."");
+                                if (!$qUpdate) {die (mysql_errno($this->db_link) . ": " . mysql_error($this->db_link));}
+                }
+                
+            }
+         }
+         
+        // Вытаскиваем в массив из базы парсел
+         /*
+        $array_db_parsel_info = array();
+        $result = mysql_query("SELECT * FROM `parsel`.`siteinfo`");
+        if (!$result) {die (mysql_errno($this->db_link) . ": " . mysql_error($this->db_link));}
+            while($row =  mysql_fetch_object($result)) {
+                $array_db_info = array("id"=>$row->{"id"}, "name"=>$row->{"title"}, "param"=>$row->{"description_ru-RU"});
+            }
+         
+         */
+        
+    }
+    
 }
