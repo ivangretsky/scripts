@@ -87,33 +87,41 @@ class ClassConvertTable {
                 //foreach($result as $n){print $n[0]."-".$n[1];}
                 print $result[0][0]."-".$result[0][1]."=".trim($array[$key+1])."<br/>";
              }*/
-             $str = str_replace(".", ",", trim($array[$key+1]));
+               
+             $str = str_replace(",", ".", trim($array[$key+1]));
              $str = str_replace("–", "-", $str);
              
              
              $array_z = explode("-", $str);
             // print $str."<br/>";
              // fix с запятой
-             if(count(explode(",", trim($array[$key+1])))>0)
+             if(count(explode(".", trim($str)))>0)
              if(count($array_z)>1){
                 // print "1=".trim($array[$key+1])."<br/>";
-                 $min_z = preg_replace("/[^0-9,0-9]/", '', trim($array_z[0]));
-                 $max_z = preg_replace("/[^0-9,0-9]/", '', trim($array_z[1]));
+                 $min_z = preg_replace("/[^0-9.0-9]/", '', trim($array_z[0]));
+                 $max_z = preg_replace("/[^0-9.0-9]/", '', trim($array_z[1]));
                  
-                 if(substr($max_z, strlen($max_z)-1, strlen($max_z)-1)==",")
+                 if(substr($max_z, strlen($max_z)-1, strlen($max_z)-1)==".")
                  $max_z = substr($max_z, 0, strlen($max_z)-1);
              }
              else{
                  $min_z = 0;
-                 $max_z = preg_replace("/[^0-9,0-9]/", '', trim($array[$key+1]));
+                 $max_z = preg_replace("/[^0-9.0-9]/", '', trim($str));
                  
-                 if(substr($max_z, strlen($max_z)-1, strlen($max_z)-1)==",")
+                 if(substr($max_z, strlen($max_z)-1, strlen($max_z)-1)==".")
                  $max_z = substr($max_z, 0, strlen($max_z)-1);
+                 
+     
+                    
+                 if(trim($array[$key+1])=="до 1,5м."){
+                  //   print $max_z."-".preg_replace("/[^0-9.0-9]/", '', trim($array[$key+1]));
+               //      exit();
+                 }
                  
              }
           // print " LEN ".substr($max_z, strlen($max_z)-1, strlen($max_z)-1);
-               
-            // print "Мин-".$min_z." Макс-".$max_z."=".trim($array[$key+1])."<br/>";
+
+             print "Мин-".$min_z." Макс-".$max_z."=".trim($array[$key+1])."<br/>";
              
               //  print preg_replace("/[^0-9,0-9]/", '', trim($array[$key+1]))."=".trim($array[$key+1])."<br/>";
              
