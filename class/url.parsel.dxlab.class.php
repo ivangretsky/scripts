@@ -23,7 +23,7 @@ class urlParsel{
     public function getImg($selector){
         $array = array();
         foreach($this->html->find($selector) as $element) 
-        $array[] = $this->urlSite.$element->src;
+            $array[] = $this->urlSite.$element->src;
         return $array;
     }
     
@@ -31,7 +31,7 @@ class urlParsel{
     public function getText($selector){
         $array = array();
         foreach($this->html->find($selector) as $element)
-        $array[] = $element->plaintext;
+            $array[] = $element->plaintext;
         return $array;
     }
     
