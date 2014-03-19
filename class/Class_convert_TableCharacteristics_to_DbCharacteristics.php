@@ -41,6 +41,9 @@ class ClassConvertTable {
         $q = mysql_query("SELECT `product_id` FROM `".$this->jprefix."_jshopping_products_to_categories` WHERE `category_id`=388");
         if (!$q) echo mysql_errno($this->db_link) . ": " . mysql_error($this->db_link);
         
+        // Массив цветов
+        $array_color = $this->GetColor();
+        $array_color_add = array();
         
         while($row=mysql_fetch_row($q)) {
            
@@ -121,20 +124,41 @@ class ClassConvertTable {
              }
           // print " LEN ".substr($max_z, strlen($max_z)-1, strlen($max_z)-1);
 
-             print "Мин-".$min_z." Макс-".$max_z."=".trim($array[$key+1])."<br/>";
+          //   print "Мин-".$min_z." Макс-".$max_z."=".trim($array[$key+1])."<br/>";
              
               //  print preg_replace("/[^0-9,0-9]/", '', trim($array[$key+1]))."=".trim($array[$key+1])."<br/>";
              
             }
             
+            if(stripos($td, "Цвет") !== FALSE){ 
+                $b = true;
+       
+                // Добавим цвет если что то плохо
+                foreach ($array_color as $color)if($color[0]==trim($array[$key+1])){
+                    $b = false;
+                }
+                if($b){ $array_color_add[]=trim($array[$key+1]); $array_color[] = array(trim($array[$key+1]), -1);}  
+                
+                
+                // Ищем цвета
+                foreach ($array_color as $color)
+                    if(trim($array[$key+1])==$color[0]){
+                        $color_t = $color[1];
+                    }
+                
+            }
             
             // Цвет 23
+            /*
             if(stripos($td, "CG") !== FALSE) $color_t = "15";
             if(stripos($td, "FB") !== FALSE) $color_t = "16";
             if(stripos($td, "FMBL") !== FALSE) $color_t = "17";
             if(stripos($td, "FGGM") !== FALSE) $color_t = "18";
             if(stripos($td, "GGH") !== FALSE) $color_t = "19";
-            if(stripos($td, "GGH") !== FALSE) $color_t = "20";
+            if(stripos($td, "RH") !== FALSE) $color_t = "20";*/
+            
+            
+            
         }
         
         //continue;
@@ -150,8 +174,47 @@ class ClassConvertTable {
         if (!$q_update) echo mysql_errno($this->db_link) . ": " . mysql_error($this->db_link);
         
         }
-        print "ВСЕ";
+       
+
+        // Добавляем если надо
+        foreach ($array_color_add as $color){
+            $this->addColor($color);
+           //$k++;
+           // print $k." - ".$color."<br/>";
+        }
+        
+        $k = 0;
+        foreach ($array_color as $color){
+            $k++;
+            $sql = mysql_query("UPDATE `vlif9_jshopping_products_extra_field_values` SET `ordering` = '".$k."' WHERE `id` = ".$color[1].";");
+            if (!$sql) echo mysql_errno($this->db_link) . ": " . mysql_error($this->db_link);
+        }
+        
+                
     }
     
+    // Добавляем цвета
+    public function addColor($color){
+        $sql = mysql_query("INSERT INTO `vlif9_jshopping_products_extra_field_values` (`id`, `field_id`, `ordering`, `name_en-GB`, `name_ru-RU`) VALUES (NULL, '23', '6', '".$color."', '".$color."');");
+        if (!$sql) echo mysql_errno($this->db_link) . ": " . mysql_error($this->db_link);
+         else
+        print "Добавлен цвет:".$color."<br/>";
+            
+        // 
+    }
+    
+    // Получить цвета из базы данных
+    public function GetColor(){
+        $q = mysql_query("SELECT `name_ru-RU`, `id` FROM `vlif9_jshopping_products_extra_field_values` WHERE `field_id`=23 order by `name_ru-RU` ASC");
+        if (!$q) echo mysql_errno($this->db_link) . ": " . mysql_error($this->db_link);
+        
+        $_array = array();
+        while( $row = mysql_fetch_row($q) ) {
+            $_array[] = array($row[0], $row[1]);
+        }
+        
+        return $_array;
+        
+    }
 }
 ?>

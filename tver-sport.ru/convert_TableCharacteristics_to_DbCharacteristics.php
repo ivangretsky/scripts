@@ -12,7 +12,7 @@ ini_set("display_errors", 1);
 include_once '../class/Class_convert_TableCharacteristics_to_DbCharacteristics.php';
 include_once '../class/simple_html_dom.php';
 // Создаем класс
-$TableCharacteristics = new ClassConvertTable(array("db"=>"tver_sportru", "host"=>"127.0.0.1", "user"=>"root", "pass"=>"", "jprefix"=>"vlif9"));
+$TableCharacteristics = new ClassConvertTable(array("db"=>"tversportru", "host"=>"127.0.0.1", "user"=>"root", "pass"=>"", "jprefix"=>"vlif9"));
 $TableCharacteristics->parcerTableToCh();
 
 ?>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="module" version="2.5.0" method="upgrade">
+        <!-- Названия модуля -->
+        <name>mod_march</name>
+        <!-- Следующие элементы являются не обязательными,
+            информация об авторе, копирайте и т.п. -->
+        <creationDate>26.02.2014</creationDate>
+        <author>DXLAB</author>
+        <authorEmail>support@dxkub.ru</authorEmail>
+        <authorUrl>http://www.dxkub.ru</authorUrl>
+        <copyright>Copyright Info</copyright>
+        <license>License Info</license>
+        <!--  Версия модуля запишется в БД таблица extension -->
+        <version>0.0.1</version>
+        <!-- Описание, не обязательно, по умолчанию использеуется имя модуля -->
+        <description>march</description>
+  
+        <!-- Обратите внимание на атрибут folder, он указывает из
+                 какой директории будут копироваться файлы  -->
+        <files>
+                <filename module="mod_march">mod_march.php</filename>
+                <filename>mod_march.xml</filename>
+                <filename>index.html</filename>
+        </files>
+        
+        
+        <config>
+		<fields name="params">
+			<fieldset name="basic">
+                            <field name="text" type="text" default="0" label="Количество пользователей для вывода" />
+			</fieldset>
+		</fields>
+	</config>
+        
+</extension>
