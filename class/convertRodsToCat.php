@@ -92,10 +92,10 @@ class convertRodsToCat {
         
         $array = array();
         
-        $q = mysql_query("SELECT `product_id` FROM `".$this->jprefix."_jshopping_products_to_categories` WHERE `category_id`=388");
+        $q = mysql_query("SELECT `product_id` FROM `".$this->jprefix."_jshopping_products_to_categories` WHERE `category_id`=204");
         if (!$q) echo mysql_errno($this->db_link) . ": " . mysql_error($this->db_link);
         
-        $fp = fopen('../data/file.csv', 'w');
+       // $fp = fopen('../data/file.csv', 'w');
         
         $count = 1936;
         
@@ -105,26 +105,40 @@ class convertRodsToCat {
         if (!$get_data) echo mysql_errno($this->db_link) . ": " . mysql_error($this->db_link);
         $data_html = mysql_fetch_row($get_data);
         $data_html = str_get_html($data_html[0]);
-
+        $array = array();
             foreach($data_html->find("td") as $key=>$element)
             $array[] = $element->plaintext;
             
+            $k = 0;
            foreach ($array as $key=>$td){
                  if(stripos($td, "Артикул") !== FALSE) 
-                     if(false)foreach ($this->csv_data as $c)
-                                    if(stripos($c["articul"], trim($array[$key+1])) !== FALSE){
-                                    //$this->array_products = array("id_db"=>$row[0], "new_cat"=>$c["id_cat"]);
-                                    fputcsv($fp,array("id_db"=>$row[0], "new_cat"=>$c["id_cat"]));
-                                    break;
+                                    foreach ($this->csv_data as $c){
+                                    $k++;
+                                  //  print $c["articul"] ."==". trim($array[$key+1])."<br/>";
+                                        if(stripos($c["articul"], trim($array[$key+1])) !== FALSE){
+                                  //  if($c["articul"] == trim($array[$key+1])){
+                                            $this->array_products[] = array("id_db"=>$row[0], "new_cat"=>$c["id_cat"]);
+                                            //fputcsv($fp,array("id_db"=>$row[0], "new_cat"=>$c["id_cat"]));
+                                          //  break;
+                                        }  
+                                      //  print $k."<br/>";
                                     }
             }
+           
           
                                     $count--;
-                                    print $count."<br/>";
+                                //    print $count."<br/>";
             
         }
-        fclose($fp);
-        print_r($this->array_products);
+      //  fclose($fp);
+      //  print_r($this->array_products);
+       // print count($this->array_products);
+        
+        foreach ($this->array_products as $p){
+            $sql = mysql_query("UPDATE `vlif9_jshopping_products_to_categories` SET `category_id` = '".$p["new_cat"]."' WHERE `product_id` = ".$p["id_db"]."");
+            if (!$sql) echo mysql_errno($this->db_link) . ": " . mysql_error($this->db_link);
+        }
+        
     }
 
     

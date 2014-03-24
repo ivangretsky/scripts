@@ -13,7 +13,7 @@ ini_set("display_errors", 1);
 include_once '../class/convertRodsToCat.php';
 include_once '../class/simple_html_dom.php';
 // Создаем класс
-$convertRodsToCat = new convertRodsToCat(array("db"=>"tversportru", "host"=>"127.0.0.1", "user"=>"root", "pass"=>"", "jprefix"=>"vlif9"));
+$convertRodsToCat = new convertRodsToCat(array("db"=>"tver_sportru", "host"=>"127.0.0.1", "user"=>"root", "pass"=>"", "jprefix"=>"vlif9"));
 // Получаем csv данные
 $convertRodsToCat->get_csv("../data/cat.csv");
 $convertRodsToCat->get_products_cat();
