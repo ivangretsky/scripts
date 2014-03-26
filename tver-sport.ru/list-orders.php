@@ -76,87 +76,9 @@ $mysite[0]['suf'] = 'tvr';
 $mysite[0]['mngr'] = 1202;
 */
 
-$mysite[0]['db'] = 'tvrspdbmain';
-$mysite[0]['url'] = 'tversport.ru';
-$mysite[0]['site'] = 'ТверьСпорт';
-$mysite[0]['org'] = 'ООО &quot;ТверьСпорт Ру&quot;';
-$mysite[0]['reg'] = 'Тверь';
-$mysite[0]['suf'] = 'tvr';
-$mysite[0]['mngr'] = 1202;
 
-$mysite[1]['db'] = 'yarhsprtdb';
-$mysite[1]['url'] = 'yaroslavl.heartsport.ru';
-$mysite[1]['site'] = 'HeartSport-Ярославль';
-$mysite[1]['org'] = 'ООО &quot;Спорт Ру&quot;';
-$mysite[1]['reg'] = 'Ярославль';
-$mysite[1]['suf'] = 'yar';
-$mysite[1]['mngr'] = 1202;
 
-$mysite[2]['db'] = 'vlhsprtdb';
-$mysite[2]['url'] = 'vladimir.heartsport.ru';
-$mysite[2]['site'] = 'HeartSport-Владимир';
-$mysite[2]['org'] = 'ООО &quot;Спорт Ру&quot;';
-$mysite[2]['reg'] = 'Владимир';
-$mysite[2]['suf'] = 'vl';
-$mysite[2]['mngr'] = 1203;
-
-$mysite[3]['db'] = 'nnhsprtdb';
-$mysite[3]['url'] = 'nnovgorod.heartsport.ru';
-$mysite[3]['site'] = 'HeartSport-Нижний Новгород';
-$mysite[3]['org'] = 'ООО &quot;Спорт Ру&quot;';
-$mysite[3]['reg'] = 'Н.Новгород';
-$mysite[3]['suf'] = 'nn';
-$mysite[3]['mngr'] = 1204;
-
-$mysite[4]['db'] = 'kazhsprtdb';
-$mysite[4]['url'] = 'kazan.heartsport.ru';
-$mysite[4]['site'] = 'HeartSport-Казань';
-$mysite[4]['org'] = 'ООО &quot;Спорт Ру&quot;';
-$mysite[4]['reg'] = 'Казань';
-$mysite[4]['suf'] = 'kaz';
-$mysite[4]['mngr'] = 1203;
-
-$mysite[5]['db'] = 'ufahsprtdb';
-$mysite[5]['url'] = 'ufa.heartsport.ru';
-$mysite[5]['site'] = 'HeartSport-Уфа';
-$mysite[5]['org'] = 'ООО &quot;Спорт Ру&quot;';
-$mysite[5]['reg'] = 'Уфа';
-$mysite[5]['suf'] = 'ufa';
-$mysite[5]['mngr'] = 1204;
-
-$mysite[6]['db'] = 'samhsprtdb';
-$mysite[6]['url'] = 'samara.heartsport.ru';
-$mysite[6]['site'] = 'HeartSport-Самара';
-$mysite[6]['org'] = 'ООО &quot;Спорт Ру&quot;';
-$mysite[6]['reg'] = 'Самара';
-$mysite[6]['suf'] = 'sam';
-$mysite[6]['mngr'] = 1202;
-
-$mysite[7]['db'] = 'chlhsprtdb';
-$mysite[7]['url'] = 'chelyabinsk.heartsport.ru';
-$mysite[7]['site'] = 'HeartSport-Челябинск';
-$mysite[7]['org'] = 'ООО &quot;Спорт Ру&quot;';
-$mysite[7]['reg'] = 'Челябинск';
-$mysite[7]['suf'] = 'chl';
-$mysite[7]['mngr'] = 1205;
-
-$mysite[8]['db'] = 'ekbhsprtdb';
-$mysite[8]['url'] = 'ekaterinburg.heartsport.ru';
-$mysite[8]['site'] = 'HeartSport-Екатеринбург';
-$mysite[8]['org'] = 'ООО &quot;Спорт Ру&quot;';
-$mysite[8]['reg'] = 'Екатеринбург';
-$mysite[8]['suf'] = 'ekb';
-$mysite[8]['mngr'] = 1205;
-
-$mysite[9]['db'] = 'tlthsprtdb';
-$mysite[9]['url'] = 'tolyatti.heartsport.ru';
-$mysite[9]['site'] = 'HeartSport-Тольятти';
-$mysite[9]['org'] = 'ООО &quot;Спорт Ру&quot;';
-$mysite[9]['reg'] = 'Тольятти';
-$mysite[9]['suf'] = 'tlt';
-$mysite[9]['mngr'] = 1205;
-
-$db = mysql_connect("localhost", "root", "HwN77fBaqd");
+$db = mysql_connect("localhost", "root", "");
 //$db = mysql_connect("localhost", "root", "12345678");
 if (!$db) {
 	echo "Не удается подключиться к БД";
