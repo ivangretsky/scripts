@@ -51,7 +51,7 @@ class convertOrdertsToCsv {
             mysql_select_db($this->db);
         }
         
-        нужен массив помни
+        нужен массив городов помни
         
         
         
