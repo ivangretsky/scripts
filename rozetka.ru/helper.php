@@ -119,7 +119,7 @@ class rozetka {
 	// 
 	public function recFunction($rootElement, $id=0, $link = null)
 	{	
-		print_r ($rootElement);
+		//print_r ($rootElement);
         // 1 Вложение
         foreach ($rootElement->Группа as $item)
 		{
@@ -128,7 +128,7 @@ class rozetka {
 			$ciddown = $this->array_group[count($this->array_group)-1]["cid"];
 			if (count($item->Группы) > 0)
                 foreach ($item->Группы->Группа as $item2)
-				{
+		{
 					$this->array_group[] = array("name"=>((string)$item2->Наименование), "id"=>(string)$item2->Ид, "cat"=>1, "cid"=>$this->fgphv_virtuemart_categories((string)$item2->Ид), "ciddown"=>$ciddown);           
 					// 3 Вложение
 					$ciddown1 = $this->array_group[count($this->array_group)-1]["cid"];
@@ -160,7 +160,7 @@ class rozetka {
 						}
                 } 
         }    
-		print_r ($this->array_group);
+		//print_r ($this->array_group);
     }
     
 	// Создание основной категории
@@ -243,9 +243,20 @@ class rozetka {
         if (!$q) echo mysql_errno($this->db_link) . ": " . mysql_error($this->db_link);
     } 
     
-	// Создание категории в ru ru таблице
+    // Создание категории в ru ru таблице
     public function fgphv_virtuemart_categories_ru_ru($id, $name){
-        $q = mysql_query("INSERT INTO `".$this->jprefix."_virtuemart_categories_ru_ru` (`virtuemart_category_id`, `category_name`, `category_description`, `metadesc`, `metakey`, `customtitle`, `slug`) VALUES ('".mysql_real_escape_string($id)."', '".mysql_real_escape_string($name)."', '', '', '', '', '".mysql_real_escape_string($this->translitIt($name)).'-'.mt_rand(100, 9999)."');");
+
+        // Проверяем на одинаковые ссылки
+        $q = mysql_query("SELECT `slug` FROM `".$this->jprefix."_virtuemart_categories_ru_ru` WHERE `category_name`='".mysql_real_escape_string(mb_strtolower($this->translitIt($name)))."'");
+        if (!$q) echo mysql_errno($this->db_link) . ": " . mysql_error($this->db_link);
+        
+        if (mysql_num_rows($q) > 0)
+        $q = mysql_query("INSERT INTO `".$this->jprefix."_virtuemart_categories_ru_ru` (`virtuemart_category_id`, `category_name`, `category_description`, `metadesc`, `metakey`, `customtitle`, `slug`) "
+                . "VALUES ('".mysql_real_escape_string($id)."', '".mysql_real_escape_string($name)."', '', '', '', '', '".mysql_real_escape_string(mb_strtolower($this->translitIt($name))).'-'.((mysql_num_rows($q)+1)-1)."');");
+        else
+        $q = mysql_query("INSERT INTO `".$this->jprefix."_virtuemart_categories_ru_ru` (`virtuemart_category_id`, `category_name`, `category_description`, `metadesc`, `metakey`, `customtitle`, `slug`) "
+                . "VALUES ('".mysql_real_escape_string($id)."', '".mysql_real_escape_string($name)."', '', '', '', '', '".mysql_real_escape_string(mb_strtolower($this->translitIt($name)))."');");
+        
         if (!$q) echo mysql_errno($this->db_link) . ": " . mysql_error($this->db_link);
     }
 	
@@ -278,7 +289,7 @@ class rozetka {
            //print "<td>".(string) $item->Ид[0]."</td>";
            //print "<td>".(string) $item->Наименование[0]."</td>";
            //print "<td>".(string) $item->Цены->Цена->Представление[0]."</td>";
-           $_array_price[] = array("id"=>(string)$item->Ид[0], "price"=>(string)$item->Цены->Цена->Представление[0]);
+           $_array_price[] = array("id"=>(string)$item->Ид[0], "price"=>str_replace("  ", " ",(string)$item->Цены->Цена->Представление[0]));
        
         //echo '[', (string) $item->Ид[0], '] ', (string) $item->Наименование[0], "\n";
        }
@@ -291,6 +302,8 @@ class rozetka {
        //foreach ($xml->ПакетПредложений->Предложения[0] as $item) { для прайса
        foreach ($xml->Каталог->Товары[0] as $item) {
        $i++;
+            
+       (string) $item->Наименование[0] = str_replace("  ", " ", (string) $item->Наименование[0]);
         print "<tr>";
            print "<td>".$i."</td>";
            print "<td>".(string) $item->Ид[0]."</td>";
@@ -336,18 +349,34 @@ class rozetka {
        print "</table>"; 
     }
     
+    function mb_ucfirst($str, $enc = 'utf-8') { 
+    		return mb_strtoupper(mb_substr($str, 0, 1, $enc), $enc).mb_substr($str, 1, mb_strlen($str, $enc), $enc); 
+    }
+    
     // Добавляем в fgphv_virtuemart_products_ru_ru
     public function add_fgphv_virtuemart_products_ru_ru($id, $name, $price, $idg){
         
         
         
         // Создаем категорию
-        $q = mysql_query("SELECT MAX(`virtuemart_product_id`) FROM `".$this->jprefix."_virtuemart_products_ru_ru`");
+        //$q = mysql_query("SELECT MAX(`virtuemart_product_id`) FROM `".$this->jprefix."_virtuemart_products_ru_ru`");
+        //if (!$q) echo mysql_errno($this->db_link) . ": " . mysql_error($this->db_link);
+        //$max_count_id = mysql_fetch_array($q);
+        
+        
+        $name  = $this->mb_ucfirst($name);
+       
+        // Проверяем на одинаковые ссылки
+        $q = mysql_query("SELECT `slug` FROM `".$this->jprefix."_virtuemart_products_ru_ru` WHERE `product_name`='".mysql_real_escape_string(mb_strtolower($this->translitIt($name)))."'");
         if (!$q) echo mysql_errno($this->db_link) . ": " . mysql_error($this->db_link);
-
-        $max_count_id = mysql_fetch_array($q);
-        $q=mysql_query("INSERT INTO `".$this->jprefix."_virtuemart_products_ru_ru` (`virtuemart_product_id` ,`product_s_desc` ,`product_desc` ,`product_name` ,`metadesc` ,`metakey` ,`customtitle` ,`slug`)
-        VALUES ('".mysql_real_escape_string($id)."',  '',  '',  '".mysql_real_escape_string($name)."',  '',  '',  '',  '".mysql_real_escape_string($this->translitIt($name)).'-'.mt_rand(100, 9999)."');");
+        
+        if (mysql_num_rows($q) > 0)
+            $q=mysql_query("INSERT INTO `".$this->jprefix."_virtuemart_products_ru_ru` (`virtuemart_product_id` ,`product_s_desc` ,`product_desc` ,`product_name` ,`metadesc` ,`metakey` ,`customtitle` ,`slug`)
+            VALUES ('".mysql_real_escape_string($id)."',  '',  '',  '".mysql_real_escape_string($name)."',  '',  '',  '',  '".mysql_real_escape_string(mb_strtolower($this->translitIt($name))).'-'.((mysql_num_rows($q)+1)-1)."');");
+        else
+            $q=mysql_query("INSERT INTO `".$this->jprefix."_virtuemart_products_ru_ru` (`virtuemart_product_id` ,`product_s_desc` ,`product_desc` ,`product_name` ,`metadesc` ,`metakey` ,`customtitle` ,`slug`)
+            VALUES ('".mysql_real_escape_string($id)."',  '',  '',  '".mysql_real_escape_string($name)."',  '',  '',  '',  '".mysql_real_escape_string(mb_strtolower($this->translitIt($name)))."');");
+            
         if (!$q) echo mysql_errno($this->db_link) . ": " . mysql_error($this->db_link);
 
         $this->add_fgphv_virtuemart_product_prices(($id), $price, $idg);
@@ -656,7 +685,13 @@ class rozetka {
             "ы"=>"y","ь"=>"","э"=>"e","ю"=>"yu","я"=>"ya", 
             " "=> "-", "."=> "",  ","=> "", "/"=> "-"
         );
-        $newstr = strtr($str,$tr);
+        
+       
+        $newstr = "";
+        if(strlen($newstr)>93)
+         $newstr = strtr(substr($newstr, 0, 93),$tr);
+        else
+         $newstr = strtr($str,$tr);   
         $urlstr = preg_replace('/[^A-Za-z0-9_\-]/', '', $newstr );
             return $urlstr;
     }
