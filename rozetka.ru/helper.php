@@ -670,9 +670,9 @@ class rozetka {
     public function translitIt($str) 
     {
         $tr = array(
-            "А"=>"A","Б"=>"B","В"=>"V","Г"=>"G","Д"=>"D",
-                   "Е"=>"E","Ё"=>"JO","Ж"=>"ZH",
-                   "З"=>"Z","И"=>"I","Й"=>"J","К"=>"K","Л"=>"L",
+                   "А"=>"A","Б"=>"B","В"=>"V", "Г"=>"G",
+                   "Д"=>"D","Е"=>"E","Ё"=>"JO","Ж"=>"ZH",
+                   "З"=>"Z","И"=>"I","Й"=>"J", "К"=>"K","Л"=>"L",
                    "М"=>"M","Н"=>"N","О"=>"O","П"=>"P","Р"=>"R",
                    "С"=>"S","Т"=>"T","У"=>"U","Ф"=>"F","Х"=>"KH",
                    "Ц"=>"TS","Ч"=>"CH","Ш"=>"SH","Щ"=>"SHCH","Ъ"=>"",
@@ -692,8 +692,8 @@ class rozetka {
          $newstr = strtr(substr($newstr, 0, 93),$tr);
         else
          $newstr = strtr($str,$tr);   
-        $urlstr = preg_replace('/[^A-Za-z0-9_\-]/', '', $newstr );
-            return $urlstr;
+         $urlstr = preg_replace('/[^A-Za-z0-9_\-]/', '', $newstr );
+         return $urlstr;
     }
 	
 }
